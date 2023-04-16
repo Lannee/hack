@@ -1,46 +1,63 @@
 package ru.ok.android.itmohack2023.sdk;
 
-import static android.content.Context.ACCOUNT_SERVICE;
-import static android.os.Build.VERSION.BASE_OS;
-
-import static java.security.AccessController.getContext;
-
-import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
-import android.os.Build.VERSION;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.NetworkInterface;
-import java.nio.charset.StandardCharsets;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import ru.ok.android.itmohack2023.ItmohackApplication;
 
 public class Logger {
-    /*
-        public static void log(String log){
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream("D:\\Egor\\hack\\Itmo-hack-2023\\app\\src\\main\\java\\ru\\ok\\android\\itmohack2023\\sdk\\test");
-                fos.write(log.getBytes(StandardCharsets.UTF_8));
-                fos.close();
-            } catch (IOException e) {
-                String error = e.getMessage();
-            }
-        }
-        */
 
-    String maks;
-    static String version = android.os.Build.VERSION.RELEASE+":"+Build.BOARD;
-    static String android_id=Settings.Secure.getString(ItmohackApplication.Companion.getContext().getContentResolver(), Secure.ANDROID_ID);
+    private static int LOWER_BOUND = 0;
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    static String serverURL = "https://5352-77-234-205-3.ngrok-free.app/serve.php";
+
+    static void postRequest(String postUrl, String postBody) throws IOException {
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody body = RequestBody.create(JSON, postBody);
+
+        Request request = new Request.Builder()
+                .url(postUrl)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("sat",response.body().string());
+            }
+        });
+    }
+
+    static String version = android.os.Build.VERSION.RELEASE + ":" + Build.BOARD;
+    static String android_id = Settings.Secure.getString(ItmohackApplication.Companion.getContext().getContentResolver(), Secure.ANDROID_ID);
 
     public static void log(Long interval, String path) {
-        Log.d("jopa",interval+" "+path+" "+android_id+" "+version);
+        if (interval <= LOWER_BOUND) return;
+        String json = "{\"user\":\""+android_id+"\",\"time\":"+interval+",\"label\":\""+path+"\", \"version\":\""+
+                version+"\"}";
+        Log.d("pg",json);
+        try {
+            postRequest(serverURL,json);
+        }catch (Exception e){
+            Log.e("lib error",e.toString());
+        }
     }
+
 }
