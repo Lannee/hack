@@ -17,14 +17,15 @@ public class Runtime {
     }
 
     public Process exec(String command) throws java.io.IOException {
-        Date start = new Date();
-        Process process = java.lang.Runtime.getRuntime().exec(command);
-        Long interval = new Date().getTime() - start.getTime();
-
-        StackTraceElement[] stackArray = new Exception().getStackTrace();
-        String path=stackArray[stackArray.length - 1].toString();
-
-        Logger.log(interval, path);
-        return process;
+        return Logger.createLog(() -> java.lang.Runtime.getRuntime().exec(command));
+//        Date start = new Date();
+//        Process process = java.lang.Runtime.getRuntime().exec(command);
+//        Long interval = new Date().getTime() - start.getTime();
+//
+//        StackTraceElement[] stackArray = new Exception().getStackTrace();
+//        String path=stackArray[stackArray.length - 1].toString();
+//
+//        Logger.log(interval, path);
+//        return process;
     }
 }

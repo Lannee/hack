@@ -15,13 +15,14 @@ public class Call {
     }
 
     public Response execute() throws IOException {
-        Date dateStart = new Date();
-        Response response = call.execute();
-        Long interval = new Date().getTime() - dateStart.getTime();
-        StackTraceElement[] stackArray=new Exception().getStackTrace();
-        String path=stackArray[1].toString();
-        Logger.log(interval, path);
-        return response;
+        return Logger.createLog(() -> call.execute());
+//        Date dateStart = new Date();
+//        Response response = call.execute();
+//        Long interval = new Date().getTime() - dateStart.getTime();
+//        StackTraceElement[] stackArray=new Exception().getStackTrace();
+//        String path=stackArray[1].toString();
+//        Logger.log(interval, path);
+//        return response;
     }
 
 }

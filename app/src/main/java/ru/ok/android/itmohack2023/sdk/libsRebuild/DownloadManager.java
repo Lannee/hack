@@ -2,6 +2,7 @@ package ru.ok.android.itmohack2023.sdk.libsRebuild;
 
 import android.net.Uri;
 
+import java.io.IOException;
 import java.util.Date;
 
 import okhttp3.Response;
@@ -46,13 +47,14 @@ public class DownloadManager {
         }
     }
 
-    public long enqueue(DownloadManager.Request request) {
-        Date dateStart = new Date();
-        long download = downloadManager.enqueue(request.request);
-        Long interval = new Date().getTime() - dateStart.getTime();
-        StackTraceElement[] stackArray=new Exception().getStackTrace();
-        String path=stackArray[1].toString();
-        Logger.log(interval, path);
-        return download;
+    public long enqueue(DownloadManager.Request request) throws IOException {
+        return Logger.createLog(() -> downloadManager.enqueue(request.request));
+//        Date dateStart = new Date();
+//        long download = downloadManager.enqueue(request.request);
+//        Long interval = new Date().getTime() - dateStart.getTime();
+//        StackTraceElement[] stackArray=new Exception().getStackTrace();
+//        String path=stackArray[1].toString();
+//        Logger.log(interval, path);
+//        return download;
     }
 }

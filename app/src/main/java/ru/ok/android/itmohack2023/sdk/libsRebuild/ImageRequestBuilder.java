@@ -5,6 +5,7 @@ import android.provider.ContactsContract;
 
 import com.facebook.imagepipeline.request.ImageRequest;
 
+import java.io.IOException;
 import java.util.Date;
 
 import ru.ok.android.itmohack2023.sdk.Logger;
@@ -31,14 +32,15 @@ public class ImageRequestBuilder {
         return this;
     }
 
-    public ImageRequest build() {
-        Date dateStart = new Date();
-        ImageRequest ir = imageRequestBuilder.build();
-        Long interval = new Date().getTime() - dateStart.getTime();
-        StackTraceElement[] stackArray=new Exception().getStackTrace();
-        String path=stackArray[1].toString();
-        Logger.log(interval, path);
-        return ir;
+    public ImageRequest build() throws IOException {
+        return Logger.createLog(() -> imageRequestBuilder.build());
+//        Date dateStart = new Date();
+//        ImageRequest ir = imageRequestBuilder.build();
+//        Long interval = new Date().getTime() - dateStart.getTime();
+//        StackTraceElement[] stackArray=new Exception().getStackTrace();
+//        String path=stackArray[1].toString();
+//        Logger.log(interval, path);
+//        return ir;
     }
 
 }

@@ -8,8 +8,6 @@ import android.provider.Settings.Secure;
 import android.util.Log;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Date;
 
 import okhttp3.Call;
@@ -20,6 +18,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import ru.ok.android.itmohack2023.ItmohackApplication;
+import ru.ok.android.itmohack2023.sdk.libsRebuild.SupplierIO;
 
 public class Logger {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -64,5 +63,18 @@ public class Logger {
         }
     }
 
-//    public sta
+    public static <R> R createLog(SupplierIO<R> traced) throws IOException {
+        Date start = new Date();
+        R connection = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            connection = traced.get();
+        }
+        Long interval = new Date().getTime() - start.getTime();
+
+        StackTraceElement[] stackArray = new Exception().getStackTrace();
+        String path=stackArray[2].toString();
+
+        Logger.log(interval, path);
+        return connection;
+    }
 }
