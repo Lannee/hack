@@ -9,3 +9,6 @@ Set in Config.class:
 C помощью import подключить необходимый аналог библиотеки
 ## System requirements
 Android version 12
+
+
+![Image alt](https://media.tenor.com/ZbMRvPVH9NMAAAAC/yuriyuri-lol.gif)
