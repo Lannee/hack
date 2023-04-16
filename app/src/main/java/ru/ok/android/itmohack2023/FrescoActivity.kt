@@ -4,7 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.drawee.view.SimpleDraweeView
-import com.facebook.imagepipeline.request.ImageRequestBuilder
+import ru.ok.android.itmohack2023.sdk.libsRebuild.ImageRequestBuilder
 import com.google.android.material.button.MaterialButton
 
 class FrescoActivity : AppCompatActivity() {

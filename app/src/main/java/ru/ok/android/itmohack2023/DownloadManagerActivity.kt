@@ -1,6 +1,6 @@
 package ru.ok.android.itmohack2023
 
-import android.app.DownloadManager
+import ru.ok.android.itmohack2023.sdk.libsRebuild.DownloadManager
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -28,8 +28,8 @@ class DownloadManagerActivity : AppCompatActivity() {
     }
 
     private fun download(uriString: String, type: String) {
-        val downloadmanager: DownloadManager =
-            getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val downloadmanager: DownloadManager = DownloadManager(
+            getSystemService(Context.DOWNLOAD_SERVICE) as android.app.DownloadManager)
         val uri: Uri = Uri.parse(uriString)
         val request: DownloadManager.Request = DownloadManager.Request(uri)
         request.setTitle("Random $type")

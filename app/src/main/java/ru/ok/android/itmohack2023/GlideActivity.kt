@@ -3,7 +3,7 @@ package ru.ok.android.itmohack2023
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
+import ru.ok.android.itmohack2023.sdk.libsRebuild.Glide
 
 class GlideActivity : AppCompatActivity() {
     private lateinit var cat1: ImageView

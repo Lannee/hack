@@ -3,8 +3,7 @@ package ru.ok.android.itmohack2023
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
+import ru.ok.android.itmohack2023.sdk.libsRebuild.Picasso;
 
 class PicassoActivity : AppCompatActivity() {
     private lateinit var dog1: ImageView
