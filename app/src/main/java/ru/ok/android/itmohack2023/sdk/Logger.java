@@ -1,10 +1,16 @@
 package ru.ok.android.itmohack2023.sdk;
 
+import static ru.ok.android.itmohack2023.sdk.Config.serverURL;
+
 import android.os.Build;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.util.Log;
+
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -16,12 +22,9 @@ import okhttp3.Response;
 import ru.ok.android.itmohack2023.ItmohackApplication;
 
 public class Logger {
-
-    private static int LOWER_BOUND = 0;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    static String serverURL = "https://5352-77-234-205-3.ngrok-free.app/serve.php";
 
-    static void postRequest(String postUrl, String postBody) throws IOException {
+    private static void postRequest(String postUrl, String postBody) throws IOException {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -40,24 +43,26 @@ public class Logger {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("sat",response.body().string());
+                Log.d("sat", response.body().string());
             }
         });
     }
 
-    static String version = android.os.Build.VERSION.RELEASE + ":" + Build.BOARD;
-    static String android_id = Settings.Secure.getString(ItmohackApplication.Companion.getContext().getContentResolver(), Secure.ANDROID_ID);
+    private static String version = android.os.Build.VERSION.RELEASE + ":" + Build.BOARD;
+    private static String android_id = Settings.Secure.getString(ItmohackApplication.Companion.getContext().getContentResolver(), Secure.ANDROID_ID);
 
     public static void log(Long interval, String path) {
-        if (interval <= LOWER_BOUND) return;
-        String json = "{\"user\":\""+android_id+"\",\"time\":"+interval+",\"label\":\""+path+"\", \"version\":\""+
-                version+"\"}";
-        Log.d("pg",json);
+        if (interval <= Config.LOWER_BOUND) return;
+        Date time = new Date();
+        String json = "{\"user\":\"" + android_id + "\",\"time\":" + interval + ",\"label\":\"" + path + "\", \"version\":\"" +
+                version + "\"}";
+        Log.d("pg", json);
         try {
-            postRequest(serverURL,json);
-        }catch (Exception e){
-            Log.e("lib error",e.toString());
+            postRequest(serverURL, json);
+        } catch (Exception e) {
+            Log.e("lib error", e.toString());
         }
     }
 
+//    public sta
 }

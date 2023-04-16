@@ -10,4 +10,7 @@ public class OkHttpClient {
         okhttp3.Call call = new okhttp3.OkHttpClient().newCall(request);
         return new Call(call);
     }
+    public static okhttp3.OkHttpClient.Builder Builder(){
+        return new okhttp3.OkHttpClient.Builder();
+    }
 }
