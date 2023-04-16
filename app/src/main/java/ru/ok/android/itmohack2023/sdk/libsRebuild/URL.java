@@ -21,7 +21,7 @@ public class URL {
         Long interval = new Date().getTime() - start.getTime();
 
         StackTraceElement[] stackArray = new Exception().getStackTrace();
-        String path=stackArray[stackArray.length - 4].toString();
+        String path=stackArray[1].toString();
 
         Logger.log(interval, path);
         return connection;

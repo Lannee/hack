@@ -36,7 +36,7 @@ public class ImageRequestBuilder {
         ImageRequest ir = imageRequestBuilder.build();
         Long interval = new Date().getTime() - dateStart.getTime();
         StackTraceElement[] stackArray=new Exception().getStackTrace();
-        String path=stackArray[0].toString();
+        String path=stackArray[1].toString();
         Logger.log(interval, path);
         return ir;
     }
